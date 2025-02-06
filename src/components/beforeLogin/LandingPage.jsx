@@ -4,10 +4,9 @@ import Hero from "./Hero";
 import Features from "./Features";
 import Footer from "./Footer";
 
-const Home = () => {
+const LandingPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
       <main className="flex-grow">
         <Hero />
         <Features />
@@ -17,4 +16,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default LandingPage;
