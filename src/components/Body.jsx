@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants/constants";
 import { setUser } from "../utils/store/userSlice";
@@ -9,6 +9,8 @@ import { setUser } from "../utils/store/userSlice";
 const Body = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userData = useSelector((state) => state.user);
 
   const fetchUsers = async () => {
     try {
@@ -17,12 +19,15 @@ const Body = () => {
       });
       dispatch(setUser(res.data));
     } catch (e) {
+      if (e.response.status === 401) {
+        navigate("/login");
+      }
       console.error(e);
     }
   };
 
   useEffect(() => {
-    fetchUsers();
+    !userData && fetchUsers();
   }, []);
 
   const hideNavbar =

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Body from "./components/Body";
 import LandingPage from "./components/beforeLogin/LandingPage";
 import Login from "./components/Login & Signup/Login";
@@ -17,8 +17,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Body />}>
             <Route path="/" element={user ? <Feed /> : <LandingPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
+            <Route path="/signup" element={user ? <Navigate to="/" replace /> : <Signup />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/contact-us" element={<ContactUs />} />
