@@ -15,5 +15,5 @@
  - Install Axios
  - CORS -> install cors in backend => add middleware app.use(cors()) with origin, credentials:true
  - Whenever making api call so pass axios => { withCredentials: true }
-
- 
+ - Install react-redux and @reduxjs/toolkit
+ - created appStore and userSlice
