@@ -17,3 +17,5 @@
  - Whenever making api call so pass axios => { withCredentials: true }
  - Install react-redux and @reduxjs/toolkit
  - created appStore and userSlice
+ - on login update store
+ - according to store do the conditional renderings

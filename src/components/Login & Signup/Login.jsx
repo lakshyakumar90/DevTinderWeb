@@ -1,25 +1,20 @@
-import axios from "axios";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import useLogin from "../../utils/hooks/useLogin";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("zeff@gmail.com");
+  const [password, setPassword] = useState("Zeff@123");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const navigate = useNavigate();
+  const login = useLogin();
 
-  const handleLogin = async(e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    try{
-      const res = await axios.post("http://localhost:3000/login", {
-        email,
-        password
-      }, {
-        withCredentials: true
-      })
-    } catch (error) {
-      console.error(error);
-    } 
+    login(email, password);
+    navigate("/");
   };
 
   return (
