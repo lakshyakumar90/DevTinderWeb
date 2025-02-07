@@ -1,14 +1,30 @@
 import React from "react";
 import { Code } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants/constants";
+import { removeUser } from "../utils/store/userSlice";
 
 const Navbar = () => {
   const user = useSelector((state) => state.user);
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const isAuthPath =
     location.pathname.includes("/login") ||
     location.pathname.includes("/signup");
+
+
+  const handleLogout = async() => {
+    try{
+      await axios.post(BASE_URL + "/logout",{}, {withCredentials: true});
+      dispatch(removeUser());
+    }catch(e){
+      navigate("/error");
+      console.error(e);
+    }
+  }
 
   return (
     <div className="navbar bg-base-300 shadow-sm fixed top-0 z-50">
@@ -41,16 +57,16 @@ const Navbar = () => {
                 className="menu menu-sm dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <a className="justify-between">
+                  <Link to="/profile" className="justify-between">
                     Profile
                     <span className="badge">New</span>
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a>Settings</a>
+                  <Link to="/settings">Settings</Link>
                 </li>
                 <li>
-                  <a>Logout</a>
+                  <Link onClick={handleLogout} to="/logout">Logout</Link>
                 </li>
               </ul>
             </div>

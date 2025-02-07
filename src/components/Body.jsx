@@ -22,6 +22,7 @@ const Body = () => {
       if (e.response.status === 401) {
         navigate("/login");
       }
+      navigate("/error");
       console.error(e);
     }
   };

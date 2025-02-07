@@ -9,6 +9,9 @@ import PrivacyPolicy from "./components/policy/PrivacyPolicy";
 import ContactUs from "./components/policy/ContactUs";
 import Feed from "./components/AfterLogin/Feed";
 import { useSelector } from "react-redux";
+import Profile from "./components/AfterLogin/Profile";
+import Settings from "./components/AfterLogin/Settings";
+import Error from "./components/Error";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -22,6 +25,10 @@ const App = () => {
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/logout" element={<Navigate to="/login" replace />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={user ?<Settings />: <Navigate to="/login" replace />} />
+            <Route path="/error" element={<Error />} />
             <Route path="*" element={user ? <Feed /> : <LandingPage />} />
           </Route>
         </Routes>
