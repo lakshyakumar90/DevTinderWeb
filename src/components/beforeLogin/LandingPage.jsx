@@ -6,7 +6,7 @@ import Footer from "./Footer";
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen flex flex-col mt-12">
+    <div className="min-h-screen flex flex-col pt-16">
       <main className="flex-grow">
         <Hero />
         <Features />
