@@ -8,11 +8,11 @@ const Navbar = () => {
   const isAuthPath = location.pathname.includes('/login') || location.pathname.includes('/signup');
 
   return (
-    <div className="navbar bg-base-300 shadow-sm">
+    <div className="navbar bg-base-300 shadow-sm fixed top-0 z-50">
       <div className="flex-1">
-        <Link to={"/"} className="btn btn-ghost text-xl">
+        <Link to={"/"} className="btn btn-ghost text-xl"> 
           <Code size={32} />
-          devTinder
+          DevTinder
         </Link>
       </div>
       {!isAuthPath && (
