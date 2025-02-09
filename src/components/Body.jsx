@@ -14,16 +14,17 @@ const Body = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get(BASE_URL + "/profile/view", {
-        withCredentials: true,
-      });
-      dispatch(setUser(res.data));
+      if (document.cookie) {
+        const res = await axios.get(BASE_URL + "/profile/view", {
+          withCredentials: true,
+        });
+        dispatch(setUser(res.data));
+      }
     } catch (e) {
-      if (e.response.status === 401) {
-        navigate("/login");
+      if (e.status === 401) {
+        return navigate("/login");
       }
       navigate("/error");
-      console.error(e);
     }
   };
 
@@ -37,7 +38,7 @@ const Body = () => {
     location.pathname.includes("/contact-us");
 
   return (
-    <div>
+    <div className="theme-[black]">
       {!hideNavbar && <Navbar />}
       <Outlet />
     </div>

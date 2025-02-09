@@ -2,26 +2,26 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useLogin from "../../utils/hooks/useLogin";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("zeff@gmail.com");
-  const [password, setPassword] = useState("Zeff@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const navigate = useNavigate();
+  const [error, setError] = useState(null);
   const login = useLogin();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    login(email, password);
-    navigate("/");
+    login(email, password, setError);
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen text-gray-400">
-      <div className="w-full max-w-md bg-base-300 p-8 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-center text-primary">Login</h2>
-      <p className="text-sm text-center text-gray-500 mb-4">Connect with developers around the world</p>
+      <div className="w-full max-w-md p-8 rounded-lg shadow-lg bg-base-200">
+        <h2 className="text-2xl font-bold text-center text-gray-200">Login</h2>
+        <p className="text-sm text-center mb-4">
+          Connect with developers around the world
+        </p>
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block">Email</label>
@@ -49,9 +49,14 @@ const Login = () => {
               className="absolute inset-y-0 top-7 cursor-pointer right-3 flex items-center text-gray-500"
               onClick={() => setPasswordVisible(!passwordVisible)}
             >
-              {passwordVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              {passwordVisible ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
             </button>
           </div>
+          {error && <p className="text-red-400 text-sm mt-3">{error}</p>}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-md cursor-pointer hover:bg-blue-600 transition duration-200"
