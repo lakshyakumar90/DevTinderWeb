@@ -31,7 +31,6 @@ const ProfilePictureUpload = ({ user }) => {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
-      console.log(response);
 
       // Update Redux store with new profile picture URL
       dispatch(
@@ -43,7 +42,6 @@ const ProfilePictureUpload = ({ user }) => {
 
       toast.success(response.data.message);
     } catch (error) {
-      console.error(error);
       setError("Upload failed!");
       toast.error("Failed to upload profile picture");
     } finally {
@@ -86,7 +84,7 @@ const ProfilePictureUpload = ({ user }) => {
                         "https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg",
                     })
                   );
-                  toast.error("Profile picture removed successfully");
+                  toast.success("Profile picture removed successfully");
                 }
               }}
               className="bg-red-600 p-2 rounded-full cursor-pointer hover:bg-red-700 transition-colors"

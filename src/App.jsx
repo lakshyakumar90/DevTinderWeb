@@ -10,7 +10,6 @@ import ContactUs from "./components/policy/ContactUs";
 import Feed from "./components/AfterLogin/Feed";
 import { useSelector } from "react-redux";
 import Profile from "./components/AfterLogin/Profile";
-import Settings from "./components/AfterLogin/Settings";
 import Error from "./components/Error";
 import Requests from "./components/AfterLogin/Requests";
 import Connections from "./components/AfterLogin/Connections";

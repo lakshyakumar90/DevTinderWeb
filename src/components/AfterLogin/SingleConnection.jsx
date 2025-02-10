@@ -18,7 +18,7 @@ const SingleConnection = ({ user }) => {
         className="w-12 h-12 rounded-full"
       />
       <div className="flex flex-col">
-        <h3 className="text-md font-semibold">{firstName + " " + lastName}</h3>
+        <h3 className="text-md font-semibold">{lastName ? firstName + " " + lastName : firstName}</h3>
         <p className="text-gray-400 text-sm">
         {profileSummary.charAt(0).toUpperCase() + profileSummary.slice(1) + " ( " + experienceLevel.charAt(0).toUpperCase() + experienceLevel.slice(1) + " )"} 
           </p>
