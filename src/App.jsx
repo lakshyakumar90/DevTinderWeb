@@ -12,6 +12,8 @@ import { useSelector } from "react-redux";
 import Profile from "./components/AfterLogin/Profile";
 import Settings from "./components/AfterLogin/Settings";
 import Error from "./components/Error";
+import Requests from "./components/AfterLogin/Requests";
+import Connections from "./components/AfterLogin/Connections";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -33,7 +35,8 @@ const App = () => {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/logout" element={<Navigate to="/login" replace />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path = "/connections" element={<Connections />} />
+          <Route path="/requests" element={<Requests />} />
           <Route path="/error" element={<Error />} />
           <Route path="*" element={user ? <Feed /> : <LandingPage />} />
         </Route>

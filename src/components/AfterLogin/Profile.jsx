@@ -8,7 +8,7 @@ const Profile = () => {
   const user = useSelector((store) => store.user);
   const [showFullBio, setShowFullBio] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  
+
   if (user === null) return null;
   const {
     firstName,
@@ -22,6 +22,7 @@ const Profile = () => {
     socialLinks,
     profilePicture,
     education,
+    workExperience,
   } = user;
 
   return (
@@ -44,8 +45,12 @@ const Profile = () => {
             alt="Profile"
             className="w-32 h-32 object-cover rounded-full border-4 border-gray-300"
           />
-          <h1 className="mt-4 text-2xl font-bold">{firstName + " " + lastName}</h1>
-          <p className="text-gray-400">{experienceLevel.charAt(0).toUpperCase() + experienceLevel.slice(1)}</p>
+          <h1 className="mt-4 text-2xl font-bold">
+            {firstName + " " + lastName}
+          </h1>
+          <p className="text-gray-400">
+            {experienceLevel.charAt(0).toUpperCase() + experienceLevel.slice(1)}
+          </p>
         </div>
 
         {/* Basic Info */}
@@ -57,7 +62,8 @@ const Profile = () => {
             <strong>Location:</strong> {location}
           </p>
           <p>
-            <strong>Gender:</strong> {gender.charAt(0).toUpperCase() + gender.slice(1)}
+            <strong>Gender:</strong>{" "}
+            {gender.charAt(0).toUpperCase() + gender.slice(1)}
           </p>
         </div>
 
@@ -118,13 +124,25 @@ const Profile = () => {
           </div>
         )}
 
+        {/* Work Experience Section */}
+        {workExperience && (
+          <div className="mt-6">
+            <h3 className="text-lg font-semibold">Work Experience</h3>
+            <p className="text-gray-400">{workExperience}</p>
+          </div>
+        )}
+
         {/* Social Links */}
         {socialLinks && Object.keys(socialLinks).length > 0 && (
           <div className="mt-6">
             <h3 className="text-lg font-semibold py-3">Social Links</h3>
             <div className="flex gap-4">
+              {Object.values(socialLinks).every(link => !link || link === "" || link === " ") && (
+                <p className="text-gray-400">No social links provided</p>
+              )}
               {socialLinks.github && (
-                <a target="_blank"
+                <a
+                  target="_blank"
                   href={socialLinks.github}
                   className="text-gray-400 hover:text-gray-100 transition-all text-xl hover:underline"
                 >
@@ -132,7 +150,8 @@ const Profile = () => {
                 </a>
               )}
               {socialLinks.linkedin && (
-                <a target="_blank"
+                <a
+                  target="_blank"
                   href={socialLinks.linkedin}
                   className="text-gray-400 hover:text-gray-100 transition-all text-xl hover:underline"
                 >
@@ -140,7 +159,8 @@ const Profile = () => {
                 </a>
               )}
               {socialLinks.twitter && (
-                <a target="_blank"
+                <a
+                  target="_blank"
                   href={socialLinks.twitter}
                   className="text-gray-400 hover:text-gray-100 transition-all text-xl hover:underline"
                 >
@@ -148,7 +168,8 @@ const Profile = () => {
                 </a>
               )}
               {socialLinks.instagram && (
-                <a target="_blank"
+                <a
+                  target="_blank"
                   href={socialLinks.instagram}
                   className="text-gray-400 hover:text-gray-100 transition-all text-xl hover:underline"
                 >
@@ -160,7 +181,7 @@ const Profile = () => {
         )}
 
         {/* Edit Profile Modal */}
-        <EditProfile 
+        <EditProfile
           isOpen={isEditModalOpen}
           onClose={() => setIsEditModalOpen(false)}
           user={user}
