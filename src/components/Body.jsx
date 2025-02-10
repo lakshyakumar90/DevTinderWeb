@@ -24,13 +24,14 @@ const Body = () => {
       if (e.status === 401) {
         return navigate("/login");
       }
-      navigate("/error");
+      navigate("/");
     }
   };
 
   useEffect(() => {
     !userData && fetchUsers();
   }, []);
+  
 
   const hideNavbar =
     location.pathname.includes("/terms-of-service") ||

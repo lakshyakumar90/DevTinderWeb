@@ -13,7 +13,8 @@ const Signup = () => {
     age: "",
     experienceLevel: "",
     location: "",
-    gender: ""
+    gender: "",
+    education: "",
   });
   const [lastName, setLastName] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -148,6 +149,19 @@ const Signup = () => {
               onChange={handleChange}
               className="w-full p-2 mt-1 border border-gray-500 rounded-md focus:outline-none"
               placeholder="City, Country"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block">Education</label>
+            <input
+              type="text"
+              name="education"
+              value={formData.education}
+              onChange={handleChange}
+              className="w-full p-2 mt-1 border border-gray-500 rounded-md focus:outline-none"
+              placeholder="School, College, University, etc."
               required
             />
           </div>
