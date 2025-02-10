@@ -3,6 +3,8 @@ import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import EditProfile from "./EditProfile";
+import ProfilePictureUpload from "./ProfilePictureUpload";
+import { Toaster, toast } from "react-hot-toast";
 
 const Profile = () => {
   const user = useSelector((store) => store.user);
@@ -28,6 +30,7 @@ const Profile = () => {
   return (
     user && (
       <div className="max-w-2xl my-24 mx-auto p-6 bg-base-300 shadow-xl rounded-lg border-[0.1px] border-gray-800">
+        <Toaster position="top-center" />
         {/* Edit Profile Button */}
         <div className="flex justify-end">
           <button
@@ -39,7 +42,7 @@ const Profile = () => {
         </div>
 
         {/* Profile Picture */}
-        <div className="flex flex-col items-center">
+        {/* <div className="flex flex-col items-center">
           <img
             src={profilePicture}
             alt="Profile"
@@ -51,7 +54,8 @@ const Profile = () => {
           <p className="text-gray-400">
             {experienceLevel.charAt(0).toUpperCase() + experienceLevel.slice(1)}
           </p>
-        </div>
+        </div> */}
+        <ProfilePictureUpload user = {user} />
 
         {/* Basic Info */}
         <div className="mt-6">
@@ -109,7 +113,7 @@ const Profile = () => {
                   key={index}
                   className="px-3 py-1 bg-gray-600 font-semibold text-gray-200 rounded-lg text-sm select-none"
                 >
-                  {skill}
+                  {skill.charAt(0).toUpperCase() + skill.slice(1)}
                 </span>
               ))}
             </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useEditProfile from "../../utils/hooks/useEditProfile";
+import { toast } from "react-hot-toast";
 
 const EditProfile = ({ isOpen, onClose, user }) => {
   if (!isOpen) return null;
@@ -7,7 +8,7 @@ const EditProfile = ({ isOpen, onClose, user }) => {
     firstName = "",
     lastName = "",
     age = "",
-    experienceLevel = "beginner", 
+    experienceLevel = "beginner",
     location = "",
     gender = "male",
     education = "",
@@ -15,7 +16,7 @@ const EditProfile = ({ isOpen, onClose, user }) => {
     bio = "",
     socialLinks = {},
     workExperience = "",
-    skills = []
+    skills = [],
   } = user;
 
   const [formData, setFormData] = useState({
@@ -32,10 +33,10 @@ const EditProfile = ({ isOpen, onClose, user }) => {
       instagram: socialLinks?.instagram || "",
       linkedin: socialLinks?.linkedin || "",
       github: socialLinks?.github || "",
-      twitter: socialLinks?.twitter || ""
+      twitter: socialLinks?.twitter || "",
     },
     workExperience,
-    skills: skills || []
+    skills: skills || [],
   });
 
   const [newSkill, setNewSkill] = useState("");
@@ -43,33 +44,39 @@ const EditProfile = ({ isOpen, onClose, user }) => {
   const editProfile = useEditProfile();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formattedSkills = formData.skills.filter(skill => skill.trim() !== "");
-    const updatedFormData = {
-      ...formData,
-      skills: formattedSkills
-    };
-    
-    editProfile(updatedFormData, setError);
-    onClose();
+    try {
+      e.preventDefault();
+      const formattedSkills = formData.skills.filter(
+        (skill) => skill.trim() !== ""
+      );
+      const updatedFormData = {
+        ...formData,
+        skills: formattedSkills,
+      };
+      editProfile(updatedFormData, setError);
+      onClose();
+      toast.success("Profile updated successfully");
+    } catch (err) {
+      toast.error("Failed to update profile");
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
-    if (name === 'socialLinks') {
-      const socialType = e.target.getAttribute('data-social-type');
-      setFormData(prev => ({
+
+    if (name === "socialLinks") {
+      const socialType = e.target.getAttribute("data-social-type");
+      setFormData((prev) => ({
         ...prev,
         socialLinks: {
           ...prev.socialLinks,
-          [socialType]: value
-        }
+          [socialType]: value,
+        },
       }));
     } else {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        [name]: value
+        [name]: value,
       }));
     }
   };
@@ -78,13 +85,13 @@ const EditProfile = ({ isOpen, onClose, user }) => {
     if (newSkill.trim() !== "") {
       // Check if skill already exists (case insensitive)
       const skillExists = formData.skills.some(
-        skill => skill.toLowerCase() === newSkill.trim().toLowerCase()
+        (skill) => skill.toLowerCase() === newSkill.trim().toLowerCase()
       );
-      
+
       if (!skillExists) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
-          skills: [...prev.skills, newSkill.trim()]
+          skills: [...prev.skills, newSkill.trim()],
         }));
         setNewSkill("");
       } else {
@@ -95,9 +102,9 @@ const EditProfile = ({ isOpen, onClose, user }) => {
   };
 
   const handleRemoveSkill = (skillToRemove) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      skills: prev.skills.filter(skill => skill !== skillToRemove)
+      skills: prev.skills.filter((skill) => skill !== skillToRemove),
     }));
   };
 
@@ -280,7 +287,10 @@ const EditProfile = ({ isOpen, onClose, user }) => {
             <label className="block">Skills</label>
             <div className="flex flex-wrap gap-2 mb-2">
               {formData.skills.map((skill, index) => (
-                <div key={index} className="flex items-center bg-gray-700 px-3 py-1 rounded">
+                <div
+                  key={index}
+                  className="flex items-center bg-gray-700 px-3 py-1 rounded"
+                >
                   <span>{skill}</span>
                   <button
                     type="button"
