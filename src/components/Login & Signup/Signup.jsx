@@ -15,6 +15,7 @@ const Signup = () => {
     location: "",
     gender: "",
     education: "",
+    profileSummary: ""
   });
   const [lastName, setLastName] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -108,6 +109,27 @@ const Signup = () => {
               {passwordVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
           </div>
+
+          <div className="flex-1">
+              <label className="block">Profile Summary</label>
+              <input
+                type="text"
+                name="profileSummary"
+                value={formData.profileSummary}
+                onChange={(e) => {
+                  if (e.target.value.length <= 200) {
+                    handleChange(e);
+                  }
+                }}
+                className="w-full p-2 mt-1 border border-gray-500 rounded-md focus:outline-none"
+                placeholder="About Yourself... (max 200 characters)"
+                maxLength={200}
+                required
+              />
+              <div className="text-sm text-gray-500 mt-1">
+                {formData.profileSummary?.length || 0}/200 characters
+              </div>
+            </div>
 
           <div className="flex gap-4">
             <div className="flex-1">
