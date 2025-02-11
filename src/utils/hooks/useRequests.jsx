@@ -6,7 +6,7 @@ import { setRequests } from "../store/requestsSlice";
 const useRequests = (setError) => {
   const dispatch = useDispatch();
 
-  const getRequests = async () => {
+  const getRequests = async (setError) => {
     try{
       const response = await axios.get(BASE_URL + "/user/requests/received", {
         withCredentials: true,

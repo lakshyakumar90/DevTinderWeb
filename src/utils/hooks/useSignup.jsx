@@ -16,7 +16,6 @@ const useSignup = () => {
         const res = await axios.post(BASE_URL + "/signup", formData, {
           withCredentials: true,
         });
-        console.log(res);
           dispatch(setUser(res?.data?.data));
           navigate('/');
       } catch (error) {

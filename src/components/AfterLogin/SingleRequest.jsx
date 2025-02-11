@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import useRequestReview from "../../utils/hooks/useRequestReview";
+import { useNavigate } from "react-router-dom";
 
 const SingleRequest = ({ request }) => {
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
   const {
     firstName,
     lastName,
@@ -12,14 +15,28 @@ const SingleRequest = ({ request }) => {
     profileSummary,
     education,
   } = request.fromUserId;
+
   const requestReview = useRequestReview();
 
   const handleClick = (status) => {
     requestReview(request._id, status, setError);
   };
 
+  const handleProfileClick = () => {
+    navigate(`/profile/${request.fromUserId._id}`, {
+      state: {
+        user: request.fromUserId,
+        type: "request",
+        requestId: request._id,
+      },
+    });
+  };
+
   return (
-    <div className="flex items-center justify-between space-x-4 select-none my-5">
+    <div
+      className="flex items-center justify-between space-x-4 select-none py-5 px-5 rounded-xl cursor-pointer hover:bg-base-200"
+      onClick={handleProfileClick}
+    >
       <div className="flex items-center space-x-4">
         <img
           src={profilePicture}
@@ -31,12 +48,13 @@ const SingleRequest = ({ request }) => {
             {lastName ? firstName + " " + lastName : firstName}
           </h3>
           <p className="text-gray-400 text-sm">
-            {profileSummary.charAt(0).toUpperCase() +
-              profileSummary.slice(1) +
-              " ( " +
-              experienceLevel.charAt(0).toUpperCase() +
-              experienceLevel.slice(1) +
-              " )"}
+            {profileSummary.length > 50
+              ? profileSummary.slice(0, 50) + "..."
+              : profileSummary.charAt(0).toUpperCase() +
+                profileSummary.slice(1)}
+            <br />({" "}
+            {experienceLevel.charAt(0).toUpperCase() + experienceLevel.slice(1)}{" "}
+            )
           </p>
           {education && <p className="text-gray-400 text-sm">{education}</p>}
         </div>
@@ -55,7 +73,7 @@ const SingleRequest = ({ request }) => {
           Reject
         </button>
       </div>
-        {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 };

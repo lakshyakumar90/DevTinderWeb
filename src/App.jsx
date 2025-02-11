@@ -13,6 +13,7 @@ import Profile from "./components/AfterLogin/Profile";
 import Error from "./components/Error";
 import Requests from "./components/AfterLogin/Requests";
 import Connections from "./components/AfterLogin/Connections";
+import PublicProfile from "./components/AfterLogin/PublicProfile";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/logout" element={<Navigate to="/login" replace />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:id" element={<PublicProfile />} />
           <Route path = "/connections" element={<Connections />} />
           <Route path="/requests" element={<Requests />} />
           <Route path="/error" element={<Error />} />

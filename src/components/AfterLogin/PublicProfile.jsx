@@ -1,24 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { useLocation } from "react-router-dom";
+import useRequestReview from "../../utils/hooks/useRequestReview";
 import { useSelector } from "react-redux";
-import EditProfile from "./EditProfile";
-import ProfilePictureUpload from "./ProfilePictureUpload";
-import { Toaster, toast } from "react-hot-toast";
+import useRequests from "../../utils/hooks/useRequests";
 import BackRoute from "./BackRoute";
 
-const Profile = () => {
-  const user = useSelector((store) => store.user);
+const PublicProfile = () => {
+  const locationn = useLocation();
+  const [user, setUser] = useState(locationn.state?.user);
   const [showFullBio, setShowFullBio] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [requestId, setRequestId] = useState(locationn.state?.requestId);
+  const [type, setType] = useState(locationn.state?.type);
+  const requestReview = useRequestReview();
+  const getRequests = useRequests();
+  const requests = useSelector((store) => store.requests);
 
-  if (user === null) return null;
+  const exists =
+    requests && requests.some((request) => request._id === requestId);
+
+  if (user === null) return;
+
   const {
     firstName,
     lastName,
-    profileSummary,
     age,
     location,
+    profileSummary,
     gender,
     experienceLevel,
     bio,
@@ -29,44 +38,41 @@ const Profile = () => {
     workExperience,
   } = user;
 
+  const handleClick = (status) => {
+    requestReview(requestId, status);
+  };
+
+  useEffect(() => {
+    getRequests();
+    setUser(locationn.state?.user);
+    setType(locationn.state?.type);
+    setRequestId(locationn.state?.requestId);
+  }, [locationn, type, requestId]);
+
   return (
     user && (
-      <div className="max-w-2xl my-24 mx-auto p-6 bg-base-300 shadow-xl rounded-lg border-[0.1px] border-gray-800">
+      <div className="max-w-2xl my-24 mx-auto p-6 bg-base-300 shadow-xl rounded-lg border-[0.1px] border-gray-800 select-none">
         <BackRoute />
-        <Toaster position="top-center" />
-        {/* Edit Profile Button */}
-        <div className="flex justify-end">
-          <button
-            onClick={() => setIsEditModalOpen(true)}
-            className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors cursor-pointer"
-          >
-            Edit Profile
-          </button>
-        </div>
-
         {/* Profile Picture */}
-        {/* <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center">
           <img
             src={profilePicture}
             alt="Profile"
             className="w-32 h-32 object-cover rounded-full border-4 border-gray-300"
           />
-          <h1 className="mt-4 text-2xl font-bold">
-            {firstName + " " + lastName}
-          </h1>
-          <p className="text-gray-400">
-            {experienceLevel.charAt(0).toUpperCase() + experienceLevel.slice(1)}
-          </p>
-        </div> */}
-        <ProfilePictureUpload user = {user} />
-
+        </div>
         {/* Profile Summary */}
         <div className="mt-6">
           <h1 className="text-2xl font-bold">
-            {firstName + " " + lastName}
+            {lastName ? firstName + " " + lastName : firstName}
           </h1>
           <p className="text-gray-400">
-            {profileSummary.charAt(0).toUpperCase() + profileSummary.slice(1) + " ( " + experienceLevel.charAt(0).toUpperCase() + experienceLevel.slice(1) + " )"}
+            {profileSummary.charAt(0).toUpperCase() +
+              profileSummary.slice(1) +
+              " ( " +
+              experienceLevel.charAt(0).toUpperCase() +
+              experienceLevel.slice(1) +
+              " )"}
           </p>
         </div>
 
@@ -154,9 +160,9 @@ const Profile = () => {
           <div className="mt-6">
             <h3 className="text-lg font-semibold py-3">Social Links</h3>
             <div className="flex gap-4">
-              {Object.values(socialLinks).every(link => !link || link === "" || link === " ") && (
-                <p className="text-gray-400">No social links provided</p>
-              )}
+              {Object.values(socialLinks).every(
+                (link) => !link || link === "" || link === " "
+              ) && <p className="text-gray-400">No social links provided</p>}
               {socialLinks.github && (
                 <a
                   target="_blank"
@@ -197,15 +203,27 @@ const Profile = () => {
           </div>
         )}
 
-        {/* Edit Profile Modal */}
-        <EditProfile
-          isOpen={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          user={user}
-        />
+        {type === "request" && exists && (
+          <div className="mt-4">
+            <h1 className="text-md font-semibold py-2">Request</h1>
+            <div className="flex space-x-2">
+              <button
+                onClick={() => handleClick("accepted")}
+                className="cursor-pointer px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-700 transition"
+              >
+                Accept
+              </button>
+              <button
+                onClick={() => handleClick("rejected")}
+                className="cursor-pointer px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition"
+              >
+                Reject
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     )
   );
 };
-
-export default Profile;
+export default PublicProfile;
