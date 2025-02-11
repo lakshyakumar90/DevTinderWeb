@@ -4,7 +4,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import EditProfile from "./EditProfile";
 import ProfilePictureUpload from "./ProfilePictureUpload";
-import { Toaster, toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import BackRoute from "./BackRoute";
 
 const Profile = () => {

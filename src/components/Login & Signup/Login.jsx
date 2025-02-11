@@ -2,6 +2,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useLogin from "../../utils/hooks/useLogin";
+import { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,6 +18,7 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen text-gray-400">
+      <Toaster position="top-center" />
       <div className="w-full max-w-md p-8 rounded-lg shadow-lg bg-base-200">
         <h2 className="text-2xl font-bold text-center text-gray-200">Login</h2>
         <p className="text-sm text-center mb-4">
@@ -56,6 +58,7 @@ const Login = () => {
               )}
             </button>
           </div>
+          <Link to={"/edit/password"} className="text-sm mb-2 inline-block hover:underline">Forgot Password</Link>
           {error && <p className="text-red-400 text-sm mt-3">{error}</p>}
           <button
             type="submit"

@@ -14,6 +14,7 @@ import Error from "./components/Error";
 import Requests from "./components/AfterLogin/Requests";
 import Connections from "./components/AfterLogin/Connections";
 import PublicProfile from "./components/AfterLogin/PublicProfile";
+import ForgotPassword from "./components/Login & Signup/ForgotPassword";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -30,13 +31,14 @@ const App = () => {
             path="/signup"
             element={user ? <Navigate to="/" replace /> : <Signup />}
           />
+          <Route path="/edit/password" element={<ForgotPassword />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/logout" element={<Navigate to="/login" replace />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/:id" element={<PublicProfile />} />
-          <Route path = "/connections" element={<Connections />} />
+          <Route path="/connections" element={<Connections />} />
           <Route path="/requests" element={<Requests />} />
           <Route path="/error" element={<Error />} />
           <Route path="*" element={user ? <Feed /> : <LandingPage />} />
