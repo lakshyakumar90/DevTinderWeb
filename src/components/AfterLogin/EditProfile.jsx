@@ -172,6 +172,9 @@ const EditProfile = ({ isOpen, onClose, user }) => {
                 className="w-full p-2 mt-1 border border-gray-500 rounded-md focus:outline-none bg-base-200 text-gray-300"
                 required
               >
+                <option value="" disabled>
+                  Choose Experience Level
+                </option>
                 <option value="beginner">Beginner</option>
                 <option value="intermediate">Intermediate</option>
                 <option value="advanced">Advanced</option>
@@ -342,6 +345,9 @@ const EditProfile = ({ isOpen, onClose, user }) => {
               className="w-full p-2 mt-1 border border-gray-500 rounded-md focus:outline-none bg-base-200 text-gray-300"
               required
             >
+              <option value="" disabled>
+                  Choose Gender
+                </option>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>

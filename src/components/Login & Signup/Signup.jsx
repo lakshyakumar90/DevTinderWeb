@@ -111,25 +111,25 @@ const Signup = () => {
           </div>
 
           <div className="flex-1">
-              <label className="block">Profile Summary</label>
-              <input
-                type="text"
-                name="profileSummary"
-                value={formData.profileSummary}
-                onChange={(e) => {
-                  if (e.target.value.length <= 200) {
-                    handleChange(e);
-                  }
-                }}
-                className="w-full p-2 mt-1 border border-gray-500 rounded-md focus:outline-none"
-                placeholder="About Yourself... (max 200 characters)"
-                maxLength={200}
-                required
-              />
-              <div className="text-sm text-gray-500 mt-1">
-                {formData.profileSummary?.length || 0}/200 characters
-              </div>
+            <label className="block">Profile Summary</label>
+            <input
+              type="text"
+              name="profileSummary"
+              value={formData.profileSummary}
+              onChange={(e) => {
+                if (e.target.value.length <= 200) {
+                  handleChange(e);
+                }
+              }}
+              className="w-full p-2 mt-1 border border-gray-500 rounded-md focus:outline-none"
+              placeholder="About Yourself... (max 200 characters)"
+              maxLength={200}
+              required
+            />
+            <div className="text-sm text-gray-500 mt-1">
+              {formData.profileSummary?.length || 0}/200 characters
             </div>
+          </div>
 
           <div className="flex gap-4">
             <div className="flex-1">
@@ -154,6 +154,9 @@ const Signup = () => {
                 className="w-full p-2 mt-1 border border-gray-500 rounded-md focus:outline-none bg-base-200"
                 required
               >
+                <option value="" disabled>
+                  Choose Experience Level
+                </option>
                 <option value="beginner">Beginner</option>
                 <option value="intermediate">Intermediate</option>
                 <option value="advanced">Advanced</option>
@@ -197,6 +200,9 @@ const Signup = () => {
               className="w-full p-2 mt-1 border border-gray-500 rounded-md focus:outline-none bg-base-200"
               required
             >
+              <option value="" disabled>
+                Choose Gender
+              </option>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>
