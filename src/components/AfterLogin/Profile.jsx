@@ -6,11 +6,13 @@ import EditProfile from "./EditProfile";
 import ProfilePictureUpload from "./ProfilePictureUpload";
 import { Toaster } from "react-hot-toast";
 import BackRoute from "./BackRoute";
+import ChangePassword from "./ChangePassword";
 
 const Profile = () => {
   const user = useSelector((store) => store.user);
   const [showFullBio, setShowFullBio] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
   if (user === null) return null;
   const {
@@ -35,38 +37,32 @@ const Profile = () => {
         <BackRoute />
         <Toaster position="top-center" />
         {/* Edit Profile Button */}
-        <div className="flex justify-end">
+        <div className="flex justify-end flex-col items-end gap-3">
           <button
             onClick={() => setIsEditModalOpen(true)}
             className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors cursor-pointer"
           >
             Edit Profile
           </button>
+          <button
+            className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors cursor-pointer ml-2"
+            onClick={() => setIsPasswordModalOpen(true)}
+          >
+            Change Password
+          </button>
         </div>
-
-        {/* Profile Picture */}
-        {/* <div className="flex flex-col items-center">
-          <img
-            src={profilePicture}
-            alt="Profile"
-            className="w-32 h-32 object-cover rounded-full border-4 border-gray-300"
-          />
-          <h1 className="mt-4 text-2xl font-bold">
-            {firstName + " " + lastName}
-          </h1>
-          <p className="text-gray-400">
-            {experienceLevel.charAt(0).toUpperCase() + experienceLevel.slice(1)}
-          </p>
-        </div> */}
-        <ProfilePictureUpload user = {user} />
+        <ProfilePictureUpload user={user} />
 
         {/* Profile Summary */}
         <div className="mt-6">
-          <h1 className="text-2xl font-bold">
-            {firstName + " " + lastName}
-          </h1>
+          <h1 className="text-2xl font-bold">{firstName + " " + lastName}</h1>
           <p className="text-gray-400">
-            {profileSummary.charAt(0).toUpperCase() + profileSummary.slice(1) + " ( " + experienceLevel.charAt(0).toUpperCase() + experienceLevel.slice(1) + " )"}
+            {profileSummary.charAt(0).toUpperCase() +
+              profileSummary.slice(1) +
+              " ( " +
+              experienceLevel.charAt(0).toUpperCase() +
+              experienceLevel.slice(1) +
+              " )"}
           </p>
         </div>
 
@@ -154,9 +150,9 @@ const Profile = () => {
           <div className="mt-6">
             <h3 className="text-lg font-semibold py-3">Social Links</h3>
             <div className="flex gap-4">
-              {Object.values(socialLinks).every(link => !link || link === "" || link === " ") && (
-                <p className="text-gray-400">No social links provided</p>
-              )}
+              {Object.values(socialLinks).every(
+                (link) => !link || link === "" || link === " "
+              ) && <p className="text-gray-400">No social links provided</p>}
               {socialLinks.github && (
                 <a
                   target="_blank"
@@ -203,6 +199,10 @@ const Profile = () => {
           onClose={() => setIsEditModalOpen(false)}
           user={user}
         />
+        {isPasswordModalOpen && <ChangePassword
+          isOpen={isPasswordModalOpen}
+          onClose={() => setIsPasswordModalOpen(false)}
+        />}
       </div>
     )
   );

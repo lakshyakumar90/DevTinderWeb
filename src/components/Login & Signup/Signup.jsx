@@ -2,7 +2,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useSignup from "../../utils/hooks/useSignup";
-
+import { Toaster } from "react-hot-toast";
 
 const Signup = () => {
   const signup = useSignup();
