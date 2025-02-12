@@ -15,6 +15,8 @@ import Requests from "./components/AfterLogin/Requests";
 import Connections from "./components/AfterLogin/Connections";
 import PublicProfile from "./components/AfterLogin/PublicProfile";
 import ForgotPassword from "./components/Login & Signup/ForgotPassword";
+import ResetPassword from "./components/Login & Signup/ResetPassword";
+import ForgotPasswordUsingEmail from "./components/Login & Signup/ForgotPasswordUsingEmail";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -32,6 +34,8 @@ const App = () => {
             element={user ? <Navigate to="/" replace /> : <Signup />}
           />
           <Route path="/edit/password" element={<ForgotPassword />} />
+          <Route path="/forgot-password" element={<ForgotPasswordUsingEmail />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/contact-us" element={<ContactUs />} />

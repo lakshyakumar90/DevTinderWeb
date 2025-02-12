@@ -3,6 +3,7 @@ import useForgotPassword from "../../utils/hooks/useForgotPassword";
 import { Eye, EyeOff } from "lucide-react";
 import BackRoute from "../AfterLogin/BackRoute";
 import { toast, Toaster } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -12,8 +13,7 @@ const ForgotPassword = () => {
   const [error, setError] = useState(null);
   const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
-  const [confirmNewPasswordVisible, setConfirmNewPasswordVisible] =
-    useState(false);
+  const [confirmNewPasswordVisible, setConfirmNewPasswordVisible] = useState(false);
 
   const forgotPassword = useForgotPassword();
 
@@ -128,6 +128,14 @@ const ForgotPassword = () => {
       >
         Change Password
       </button>
+      <Link to="/forgot-password">
+        <button
+          type="button"
+          className="w-full mt-2 bg-gray-500 text-white py-2 rounded-md cursor-pointer hover:bg-gray-600 transition duration-200"
+        >
+          Try using email
+        </button>
+      </Link>
     </form>
   );
 };
