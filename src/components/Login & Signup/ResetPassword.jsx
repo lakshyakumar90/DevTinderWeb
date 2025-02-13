@@ -50,7 +50,7 @@ const ResetPassword = () => {
               )}
             </button>
           </div>
-          <button type="submit" className="w-full py-2 bg-blue-500 text-white rounded-md">
+          <button type="submit" className="w-full py-2 bg-blue-500 text-white rounded-md cursor-pointer">
             Reset Password
           </button>
         </form>

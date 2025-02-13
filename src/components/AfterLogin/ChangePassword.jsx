@@ -42,8 +42,8 @@ const ChangePassword = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black flex items-center justify-center z-50 text-gray-100">
-        <BackRoute />
-      <div className="bg-base-300 p-6 rounded-lg w-full max-w-2xl h-[80vh] overflow-auto">
+      <div className="bg-base-300 p-6 rounded-lg w-full max-w-2xl h-[90vh] overflow-auto">
+      <BackRoute />
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Change Password</h2>
           <button
