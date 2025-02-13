@@ -50,6 +50,26 @@ const ProfilePictureUpload = ({ user }) => {
     }
   };
 
+  const handleDelete = async () => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete your profile picture?"
+    );
+  
+    if (!isConfirmed) return;
+  
+    try {
+      const response = await axios.delete(`${BASE_URL}/remove-profile-pic`, {
+        withCredentials: true, // Ensure cookies (JWT) are sent
+      });
+  
+      dispatch(setUser(response.data.user)); // Update Redux store
+      toast.success(response.data.message);
+    } catch (error) {
+      toast.error("Failed to remove profile picture");
+    }
+  };
+  
+
   return (
     <div className="flex flex-col items-center">
       <Toaster position="top-center" />
@@ -70,23 +90,7 @@ const ProfilePictureUpload = ({ user }) => {
         {!preview && (
           <div className="absolute -bottom-10 right-5 flex gap-2">
             <button
-              onClick={() => {
-                if (
-                  window.confirm(
-                    "Are you sure you want to delete your profile picture?"
-                  )
-                ) {
-                  // Handle delete logic here
-                  dispatch(
-                    setUser({
-                      ...user,
-                      profilePicture:
-                        "https://t3.ftcdn.net/jpg/06/33/54/78/360_F_633547842_AugYzexTpMJ9z1YcpTKUBoqBF0CUCk10.jpg",
-                    })
-                  );
-                  toast.success("Profile picture removed successfully");
-                }
-              }}
+              onClick={handleDelete}
               className="bg-red-600 p-2 rounded-full cursor-pointer hover:bg-red-700 transition-colors"
             >
               <svg
