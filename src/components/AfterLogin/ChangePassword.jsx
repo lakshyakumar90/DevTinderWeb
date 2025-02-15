@@ -43,7 +43,7 @@ const ChangePassword = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black flex items-center justify-center z-50 text-gray-100">
       <div className="bg-base-300 p-6 rounded-lg w-full max-w-2xl h-[90vh] overflow-auto">
-      <BackRoute />
+        <BackRoute />
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Change Password</h2>
           <button
@@ -127,7 +127,7 @@ const ChangePassword = ({ isOpen, onClose }) => {
           <div className="flex justify-between">
             <button
               type="submit"
-              className="px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition-all cursor-pointer"
+              className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-800 transition-all cursor-pointer"
             >
               Save changes
             </button>
@@ -142,9 +142,18 @@ const ChangePassword = ({ isOpen, onClose }) => {
           <Link to="/forgot-password">
             <button
               type="button"
-              className="w-full mt-2 bg-gray-500 text-white py-2 rounded-md cursor-pointer hover:bg-gray-600 transition duration-200"
+              className="w-full mt-2 bg-indigo-600 text-white py-2 rounded-md cursor-pointer hover:bg-indigo-800 transition duration-200"
             >
               Try using email
+            </button>
+          </Link>
+
+          <Link to="/forgot-password/otp">
+            <button
+              type="button"
+              className="w-full mt-2 bg-indigo-600 text-white py-2 rounded-md cursor-pointer hover:bg-indigo-800 transition duration-200"
+            >
+              Try using OTP
             </button>
           </Link>
         </form>

@@ -55,7 +55,7 @@ const Profile = () => {
 
         {/* Profile Summary */}
         <div className="mt-6">
-          <h1 className="text-2xl font-bold">{firstName + " " + lastName}</h1>
+          <h1 className="text-2xl font-bold">{lastName? firstName + " " + lastName : firstName}</h1>
           <p className="text-gray-400">
             {profileSummary.charAt(0).toUpperCase() +
               profileSummary.slice(1) +
