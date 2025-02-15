@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
 import { BASE_URL } from "../../utils/constants/constants";
+import { useSelector } from "react-redux";
 
 const ForgotPasswordUsingEmail = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [countdown, setCountdown] = useState(0);
+  const user = useSelector((store) => store.user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,6 +44,12 @@ const ForgotPasswordUsingEmail = () => {
       setCountdown(0);
     }
   };
+
+  useEffect(()=>{
+    if(user && user.email){
+      setEmail(user.email);
+    }
+  },[user]);
 
   return (
     <div>

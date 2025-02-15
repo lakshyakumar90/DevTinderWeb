@@ -53,7 +53,7 @@ const ForgotPassword = () => {
           required
         />
       </div>
-      <div className="mb-4 relative">
+      <div className=" relative">
         <label className="block">Old Password</label>
         <input
           type={oldPasswordVisible ? "text" : "password"}
@@ -75,7 +75,7 @@ const ForgotPassword = () => {
           )}
         </button>
       </div>
-      <div className="mb-4 relative">
+      <div className=" relative">
         <label className="block">New Password</label>
         <input
           type={newPasswordVisible ? "text" : "password"}
@@ -97,7 +97,7 @@ const ForgotPassword = () => {
           )}
         </button>
       </div>
-      <div className="mb-4 relative">
+      <div className=" relative">
         <label className="block">Confirm New Password</label>
         <input
           type={confirmNewPasswordVisible ? "text" : "password"}
@@ -131,9 +131,17 @@ const ForgotPassword = () => {
       <Link to="/forgot-password">
         <button
           type="button"
-          className="w-full mt-2 bg-gray-500 text-white py-2 rounded-md cursor-pointer hover:bg-gray-600 transition duration-200"
+          className="w-full bg-gray-500 text-white py-2 rounded-md cursor-pointer hover:bg-gray-600 transition duration-200"
         >
           Try using email
+        </button>
+      </Link>
+      <Link to="/forgot-password/otp">
+        <button
+          type="button"
+          className="w-full bg-gray-500 text-white py-2 rounded-md cursor-pointer hover:bg-gray-600 transition duration-200"
+        >
+          Try using OTP
         </button>
       </Link>
     </form>

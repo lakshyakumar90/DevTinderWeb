@@ -37,7 +37,7 @@ const Profile = () => {
         <BackRoute />
         <Toaster position="top-center" />
         {/* Edit Profile Button */}
-        <div className="flex justify-end flex-col items-end gap-3">
+        <div className="flex justify-between items-center mb-5 flex-row-reverse">
           <button
             onClick={() => setIsEditModalOpen(true)}
             className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors cursor-pointer"
