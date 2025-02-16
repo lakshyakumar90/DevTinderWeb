@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { createSocketConnection } from "../../utils/socket";
 
 const Chat = () => {
   const { id } = useParams();
