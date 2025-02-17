@@ -37,7 +37,7 @@ const Chat = () => {
 
     try {
       const chat = await axios.get(
-        `${BASE_URL}/chat/${targetUserId}?page=${page}&limit=5`,
+        `${BASE_URL}/chat/${targetUserId}?page=${page}&limit=50`,
         {
           withCredentials: true,
         }

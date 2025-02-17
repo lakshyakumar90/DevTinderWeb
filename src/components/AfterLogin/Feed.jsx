@@ -23,7 +23,7 @@ const Feed = () => {
   return (
     <>
       <Toaster position="top-center" />
-      <div className="mt-24 flex flex-col justify-center items-center">
+      <div className="pt-36 min-h-[100dvh] flex flex-col items-center">
         <FeedCard profile={currentProfile} />
         {error && <div className="text-center mt-20">{error}</div>}
       </div>

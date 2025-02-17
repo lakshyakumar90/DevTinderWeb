@@ -33,7 +33,7 @@ const Profile = () => {
 
   return (
     user && (
-      <div className="max-w-2xl my-24 mx-auto p-6 bg-base-300 shadow-xl rounded-lg border-[0.1px] border-gray-800">
+      <div className="max-w-2xl mt-24 mb-5 mx-auto p-6 bg-base-300 shadow-xl rounded-lg border-[0.1px] border-gray-800">
         <BackRoute />
         <Toaster position="top-center" />
         {/* Edit Profile Button */}
