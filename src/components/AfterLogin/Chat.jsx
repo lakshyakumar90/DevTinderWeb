@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { createSocketConnection } from "../../utils/socket";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { BASE_URL } from "../../utils/constants/constants";
 
 const Chat = () => {
   const { targetUserId } = useParams();
@@ -15,6 +17,29 @@ const Chat = () => {
   const userId = user?._id;
   const socketRef = useRef(null);
   const messagesEndRef = useRef(null); // For auto-scrolling
+
+  const fetchChatMessages = async () => {
+    const chat = await axios.get(BASE_URL + "/chat/" + targetUserId, {
+      withCredentials: true,
+    });
+
+    const chatMessages = chat?.data?.data?.messages.map((message) => {
+      const { senderId, text } = message;
+      return {
+        sender: senderId.lastName
+          ? `${senderId.firstName} ${senderId.lastName}`
+          : senderId.firstName,
+        text: message.text,
+        timestamp: message.timestamp,
+      };
+    });
+
+    setMessages(chatMessages);
+  };
+
+  useEffect(() => {
+    fetchChatMessages();
+  }, []);
 
   // Function to format time
   const formatTime = (timestamp) => {
@@ -36,7 +61,7 @@ const Chat = () => {
         setMessages((prevMessages) => [
           ...prevMessages,
           {
-            sender: `${firstName} ${lastName}`,
+            sender: lastName ? `${firstName} ${lastName}` : firstName,
             text,
             timestamp,
           },
@@ -81,16 +106,19 @@ const Chat = () => {
           <div
             key={index}
             className={`chat flex flex-col ${
-              message.sender === `${user.firstName} ${user.lastName}`
+              message.sender ===
+              (user?.lastName
+                ? `${user?.firstName} ${user?.lastName}`
+                : user?.firstName)
                 ? "chat-end"
                 : "chat-start"
             }`}
           >
-            <div className="chat-header">
-              {message.sender}
-            </div>
+            <div className="chat-header">{message.sender}</div>
             <div className="chat-bubble">{message.text}</div>
-            <time className="text-xs opacity-50">{formatTime(message.timestamp)}</time>
+            <time className="text-xs opacity-50">
+              {formatTime(message.timestamp)}
+            </time>
           </div>
         ))}
         <div ref={messagesEndRef} /> {/* Invisible div for auto-scrolling */}
