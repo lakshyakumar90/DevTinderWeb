@@ -13,32 +13,68 @@ const Chat = () => {
 
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const user = useSelector((store) => store.user);
   const userId = user?._id;
   const socketRef = useRef(null);
   const messagesEndRef = useRef(null); // For auto-scrolling
+  const messagesContainerRef = useRef(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const maxLength = 300;
 
   const toggleReadMore = () => setIsExpanded(!isExpanded);
 
   const fetchChatMessages = async () => {
-    const chat = await axios.get(BASE_URL + "/chat/" + targetUserId, {
-      withCredentials: true,
-    });
+    if (loading) return;
+    setLoading(true);
 
-    const chatMessages = chat?.data?.data?.messages.map((message) => {
-      const { senderId, text } = message;
-      return {
-        sender: senderId.lastName
-          ? `${senderId.firstName} ${senderId.lastName}`
-          : senderId.firstName,
-        text: message.text,
-        timestamp: message.timestamp,
-      };
-    });
+    // Store the current scroll position before loading messages
+    const container = messagesContainerRef.current;
+    const previousScrollHeight = container?.scrollHeight;
 
-    setMessages(chatMessages);
+    try {
+      const chat = await axios.get(
+        `${BASE_URL}/chat/${targetUserId}?page=${page}&limit=5`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      const chatData = chat?.data?.data;
+      const chatMessages = chat?.data?.data?.messages.map((message) => {
+        const { senderId, text, timestamp } = message;
+        return {
+          sender: senderId.lastName
+            ? `${senderId.firstName} ${senderId.lastName}`
+            : senderId.firstName,
+          text,
+          timestamp,
+        };
+      });
+
+      if (page == 1) {
+        setMessages(chatMessages);
+      } else {
+        setMessages((prevMessages) => [...chatMessages, ...prevMessages]);
+      }
+
+      setHasMore(chatData?.pagination?.hasMore);
+      setPage(page + 1);
+
+      // Restore the previous scroll position
+      setTimeout(() => {
+        if (container) {
+          container.scrollTop = container.scrollHeight - previousScrollHeight;
+        }
+      }, 0);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -97,7 +133,16 @@ const Chat = () => {
 
   // Auto-scroll to latest message
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = messagesContainerRef.current;
+    if (!container) return;
+
+    const isAtBottom =
+      container.scrollHeight - container.scrollTop <=
+      container.clientHeight + 50;
+
+    if (isAtBottom) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages]);
 
   return (
@@ -105,7 +150,19 @@ const Chat = () => {
       <div className="p-4 border-b border-gray-700">
         <h2 className="text-xl font-semibold">Chat with {targetUserName}</h2>
       </div>
-      <div className="p-4 h-[54vh] overflow-y-auto flex flex-col space-y-2">
+      <div
+        ref={messagesContainerRef}
+        className="p-4 h-[54vh] overflow-y-auto flex flex-col space-y-2"
+      >
+        {hasMore && (
+          <button
+            onClick={() => fetchChatMessages(page)}
+            disabled={loading}
+            className="text-blue-500 text-sm pb-2 cursor-pointer"
+          >
+            {loading ? "Loading..." : "Load More Messages"}
+          </button>
+        )}
         {messages.map((message, index) => (
           <div
             key={index}
