@@ -1,66 +1,103 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { createSocketConnection } from "../../utils/socket";
+import { useSelector } from "react-redux";
 
 const Chat = () => {
-  const { id } = useParams();
+  const { targetUserId } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const targetUserName = searchParams.get("targetUserName");
+
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const user = useSelector((store) => store.user);
+  const userId = user?._id;
+  const socketRef = useRef(null);
+  const messagesEndRef = useRef(null); // For auto-scrolling
+
+  // Function to format time
+  const formatTime = (timestamp) => {
+    return new Date(timestamp).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  useEffect(() => {
+    if (!user) return;
+
+    socketRef.current = createSocketConnection();
+    socketRef.current.emit("joinChat", { userId, targetUserId });
+
+    socketRef.current.on(
+      "receiveMessage",
+      ({ firstName, lastName, text, timestamp }) => {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            sender: `${firstName} ${lastName}`,
+            text,
+            timestamp,
+          },
+        ]);
+      }
+    );
+
+    return () => {
+      socketRef.current.emit("leaveChat", { userId, targetUserId });
+      socketRef.current.disconnect();
+    };
+  }, [userId, targetUserId]);
 
   const handleSendMessage = () => {
-    if (newMessage.trim() !== "") {
-      // In a real application, you would send the message to the server here
-      const messageObject = {
-        sender: "You", // Or get the actual sender info
+    if (newMessage.trim() !== "" && socketRef.current) {
+      const timestamp = new Date().toISOString();
+      console.log(timestamp)
+
+      socketRef.current.emit("sendMessage", {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        senderId: userId,
         text: newMessage,
-        timestamp: new Date().toLocaleTimeString(), // Example timestamp
-      };
-      setMessages([...messages, messageObject]);
-      setNewMessage(""); // Clear the input after sending
+        targetUserId,
+        timestamp,
+      });
+
+      setNewMessage(""); // Clear input field
     }
   };
 
+  // Auto-scroll to latest message
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  console.log(messages);
+
   return (
-    <div className="max-w-2xl mt-24 mb-10 mx-auto p-6 bg-[#272626] shadow-xl rounded-lg border-[0.1px] border-gray-800">
+    <div className="max-w-2xl mt-24 mb-5 mx-auto p-6 bg-[#272626] shadow-xl rounded-lg border-[0.1px] border-gray-800">
       <div className="p-4 border-b border-gray-700">
-        <h2 className="text-xl font-semibold">Chat with {id}</h2>
+        <h2 className="text-xl font-semibold">Chat with {targetUserName}</h2>
       </div>
-      <div className="p-4 h-[500px] overflow-y-auto flex flex-col space-y-2">
+      <div className="p-4 h-[54vh] overflow-y-auto flex flex-col space-y-2">
         {messages.map((message, index) => (
-          <div key={index}>
-            <div className="chat chat-start">
-              <div className="chat-image avatar">
-                <div className="w-10 rounded-full">
-                  <img
-                    alt="Tailwind CSS chat bubble component"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                  />
-                </div>
-              </div>
-              <div className="chat-header">
-                {message.sender}
-                <time className="text-xs opacity-50">12:45</time>
-              </div>
-              <div className="chat-bubble">{message.text}</div>
-              <div className="chat-footer opacity-50">Delivered</div>
+          <div
+            key={index}
+            className={`chat flex flex-col ${
+              message.sender === `${user.firstName} ${user.lastName}`
+                ? "chat-end"
+                : "chat-start"
+            }`}
+          >
+            <div className="chat-header">
+              {message.sender}
             </div>
-            <div className="chat chat-end">
-              <div className="chat-image avatar">
-                <div className="w-10 rounded-full">
-                  <img
-                    alt="Tailwind CSS chat bubble component"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                  />
-                </div>
-              </div>
-              <div className="chat-header">
-                Anakin
-                <time className="text-xs opacity-50">12:46</time>
-              </div>
-              <div className="chat-bubble">I hate you!</div>
-              <div className="chat-footer opacity-50">Seen at 12:46</div>
-            </div>
+            <div className="chat-bubble">{message.text}</div>
+            <time className="text-xs opacity-50">{formatTime(message.timestamp)}</time>
           </div>
         ))}
+        <div ref={messagesEndRef} /> {/* Invisible div for auto-scrolling */}
       </div>
       <div className="p-4 border-t border-gray-700 flex space-x-2">
         <input
@@ -76,7 +113,7 @@ const Chat = () => {
           }}
         />
         <button
-          className="btn bg-slate-700 text-white"
+          className="btn rounded-md border-none bg-slate-700 text-white"
           onClick={handleSendMessage}
         >
           Send

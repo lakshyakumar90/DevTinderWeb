@@ -18,6 +18,7 @@ import ForgotPassword from "./components/Login & Signup/ForgotPassword";
 import ResetPassword from "./components/Login & Signup/ResetPassword";
 import ForgotPasswordUsingEmail from "./components/Login & Signup/ForgotPasswordUsingEmail";
 import OTPVerification from "./components/AfterLogin/OTPVerification";
+import Chat from "./components/AfterLogin/Chat";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="/logout" element={<Navigate to="/login" replace />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/:id" element={<PublicProfile />} />
+          <Route path="/chat/:targetUserId" element={<Chat />} />
           <Route path="/connections" element={<Connections />} />
           <Route path="/requests" element={<Requests />} />
           <Route path="/error" element={<Error />} />

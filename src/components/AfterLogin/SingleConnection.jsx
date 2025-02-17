@@ -51,7 +51,7 @@ const SingleConnection = ({ user }) => {
             )
           </p>
         </div>
-        <Link to={`/chat/${_id}`}>
+        <Link to={`/chat/${_id}?targetUserName=${firstName}`}>
           <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-slate-700 rounded-md">
             Message
           </button>

@@ -15,7 +15,7 @@ const Connections = () => {
   const connections = useSelector((store) => store.connections);
   return (
     connections && (
-      <div className="max-w-2xl my-24 mx-auto p-6 bg-base-300 shadow-xl rounded-lg border-[0.1px] border-gray-800 select-none">
+      <div className="max-w-2xl mt-24 mb-5 mx-auto p-6 bg-base-300 shadow-xl rounded-lg border-[0.1px] border-gray-800 select-none">
         <BackRoute />
         <h1 className="text-2xl font-bold mb-3">
           Connections ({connections.length}) :{" "}
