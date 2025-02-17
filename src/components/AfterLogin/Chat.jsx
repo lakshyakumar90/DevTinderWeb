@@ -53,7 +53,6 @@ const Chat = () => {
   const handleSendMessage = () => {
     if (newMessage.trim() !== "" && socketRef.current) {
       const timestamp = new Date().toISOString();
-      console.log(timestamp)
 
       socketRef.current.emit("sendMessage", {
         firstName: user.firstName,
@@ -63,7 +62,6 @@ const Chat = () => {
         targetUserId,
         timestamp,
       });
-
       setNewMessage(""); // Clear input field
     }
   };
@@ -72,8 +70,6 @@ const Chat = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-  console.log(messages);
 
   return (
     <div className="max-w-2xl mt-24 mb-5 mx-auto p-6 bg-[#272626] shadow-xl rounded-lg border-[0.1px] border-gray-800">
