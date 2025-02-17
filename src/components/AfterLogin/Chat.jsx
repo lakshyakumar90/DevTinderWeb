@@ -17,6 +17,10 @@ const Chat = () => {
   const userId = user?._id;
   const socketRef = useRef(null);
   const messagesEndRef = useRef(null); // For auto-scrolling
+  const [isExpanded, setIsExpanded] = useState(false);
+  const maxLength = 300;
+
+  const toggleReadMore = () => setIsExpanded(!isExpanded);
 
   const fetchChatMessages = async () => {
     const chat = await axios.get(BASE_URL + "/chat/" + targetUserId, {
@@ -115,7 +119,29 @@ const Chat = () => {
             }`}
           >
             <div className="chat-header">{message.sender}</div>
-            <div className="chat-bubble">{message.text}</div>
+            <div className="chat-bubble" style={{ overflowWrap: "break-word" }}>
+              {message.text.length > maxLength ? (
+                <>
+                  {isExpanded
+                    ? message.text
+                    : `${message.text.slice(0, maxLength)}...`}
+                  <button
+                    onClick={toggleReadMore}
+                    style={{
+                      border: "none",
+                      background: "none",
+                      color: "#007BFF",
+                      cursor: "pointer",
+                      marginLeft: "5px",
+                    }}
+                  >
+                    {isExpanded ? "Read Less" : "Read More"}
+                  </button>
+                </>
+              ) : (
+                message.text
+              )}
+            </div>
             <time className="text-xs opacity-50">
               {formatTime(message.timestamp)}
             </time>
