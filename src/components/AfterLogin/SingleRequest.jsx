@@ -33,17 +33,15 @@ const SingleRequest = ({ request }) => {
   };
 
   return (
-    <div
-      className="flex items-center justify-between space-x-4 select-none py-5 px-5 rounded-xl cursor-pointer hover:bg-base-200"
-      onClick={handleProfileClick}
-    >
+    <div className="flex items-center justify-between space-x-4 select-none py-5 px-5 rounded-xl cursor-pointer hover:bg-base-200">
       <div className="flex items-center space-x-4">
         <img
+          onClick={handleProfileClick}
           src={profilePicture}
           alt={firstName}
           className="w-12 h-12 rounded-full"
         />
-        <div className="flex flex-col">
+        <div className="flex flex-col" onClick={handleProfileClick}>
           <h3 className="text-md font-semibold">
             {lastName ? firstName + " " + lastName : firstName}
           </h3>
