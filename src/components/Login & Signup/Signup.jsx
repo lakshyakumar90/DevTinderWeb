@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import useSignup from "../../utils/hooks/useSignup";
 import { Toaster } from "react-hot-toast";
+import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Signup = () => {
   const signup = useSignup();
@@ -20,6 +22,10 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState(null);
+
+  const handleGoogleSignIn = async() => {
+    window.location.href = "http://localhost:3000/googlelogin";
+  };
 
   const handleSubmit = async (e) => {
     setError("");
@@ -218,6 +224,39 @@ const Signup = () => {
             Create Account
           </button>
         </form>
+        <div className="mt-4 flex gap-3">
+          <button
+            type="button"
+            onClick={handleGoogleSignIn}
+            className="w-full bg-slate-200 text-gray-900 py-2 rounded-md cursor-pointer hover:bg-white transition duration-200 flex items-center justify-center border border-gray-300"
+          >
+            {FaGoogle && <FaGoogle className="h-5 w-5 mr-2" />}
+          </button>
+          <button
+            type="button"
+            disabled
+            onClick={handleGoogleSignIn}
+            className="w-full bg-slate-200 text-gray-900 py-2 rounded-md transition duration-200 flex items-center justify-center border border-gray-300 opacity-50 cursor-not-allowed hover:bg-slate-200"
+          >
+            {FaGithub && <FaGithub className="h-5 w-5 mr-2" />}
+          </button>
+          <button
+            type="button"
+            disabled
+            onClick={handleGoogleSignIn}
+            className="w-full bg-slate-200 text-gray-900 py-2 rounded-md transition duration-200 flex items-center justify-center border border-gray-300 opacity-50 cursor-not-allowed hover:bg-slate-200"
+          >
+            {FaXTwitter && <FaXTwitter className="h-5 w-5 mr-2" />}
+          </button>
+          <button
+            type="button"
+            disabled
+            onClick={handleGoogleSignIn}
+            className="w-full bg-slate-200 text-gray-900 py-2 rounded-md transition duration-200 flex items-center justify-center border border-gray-300 opacity-50 cursor-not-allowed hover:bg-slate-200"
+          >
+            {FaFacebook && <FaFacebook className="h-5 w-5 mr-2" />}
+          </button>
+        </div>
 
         <p className="text-center text-sm text-gray-600 mt-4">
           Already have an account?{" "}

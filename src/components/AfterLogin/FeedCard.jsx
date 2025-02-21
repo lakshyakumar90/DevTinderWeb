@@ -12,7 +12,7 @@ import useSendRequest from "../../utils/hooks/useSendRequest";
 
 const FeedCard = ({ profile }) => {
   const dispatch = useDispatch();
-  const[error, setError] = useState(null);
+  const [error, setError] = useState(null);
   const {
     firstName,
     lastName,
@@ -25,6 +25,7 @@ const FeedCard = ({ profile }) => {
     profilePicture,
     education,
     workExperience,
+    profileSummary,
   } = profile;
   const sendRequest = useSendRequest();
 
@@ -51,6 +52,9 @@ const FeedCard = ({ profile }) => {
               <h3 className="text-xl font-semibold text-gray-800">
                 {lastName ? `${firstName} ${lastName}` : firstName}
               </h3>
+            )}
+            {profileSummary && (
+              <p className="text-gray-600 text-sm">{profileSummary}</p>
             )}
             {experienceLevel && (
               <p className="text-gray-600 text-sm">

@@ -57,7 +57,7 @@ const Profile = () => {
         <div className="mt-6">
           <h1 className="text-2xl font-bold">{lastName? firstName + " " + lastName : firstName}</h1>
           <p className="text-gray-400">
-            {profileSummary.charAt(0).toUpperCase() +
+            {profileSummary && profileSummary.charAt(0).toUpperCase() +
               profileSummary.slice(1) +
               " ( " +
               experienceLevel.charAt(0).toUpperCase() +
@@ -68,16 +68,16 @@ const Profile = () => {
 
         {/* Basic Info */}
         <div className="mt-6">
-          <p>
+          {age && <p>
             <strong>Age:</strong> {age}
-          </p>
-          <p>
+          </p>}
+          {location && <p>
             <strong>Location:</strong> {location}
-          </p>
-          <p>
+          </p>}
+          {gender && <p>
             <strong>Gender:</strong>{" "}
             {gender.charAt(0).toUpperCase() + gender.slice(1)}
-          </p>
+          </p>}
         </div>
 
         {/* Bio Section */}
