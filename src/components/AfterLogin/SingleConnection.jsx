@@ -27,12 +27,14 @@ const SingleConnection = ({ user }) => {
 
   return (
     <div className="flex items-center space-x-4 select-none py-5 px-5 rounded-xl hover:bg-base-200">
-      <img
-        onClick={handleProfileClick}
-        src={profilePicture}
-        alt={firstName}
-        className="w-12 h-12 rounded-full cursor-pointer"
-      />
+      {profilePicture && (
+        <img
+          onClick={handleProfileClick}
+          src={profilePicture}
+          alt={firstName}
+          className="w-12 h-12 rounded-full cursor-pointer"
+        />
+      )}
       <div className="flex items-center justify-between w-full">
         <div
           className="flex flex-col cursor-pointer"
@@ -47,7 +49,9 @@ const SingleConnection = ({ user }) => {
               : profileSummary.charAt(0).toUpperCase() +
                 profileSummary.slice(1)}
             <br />({" "}
-            {experienceLevel.charAt(0).toUpperCase() + experienceLevel.slice(1)}{" "}
+            {experienceLevel &&
+              experienceLevel.charAt(0).toUpperCase() +
+                experienceLevel.slice(1)}{" "}
             )
           </p>
         </div>

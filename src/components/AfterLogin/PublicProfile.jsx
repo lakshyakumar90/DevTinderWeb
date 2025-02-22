@@ -67,27 +67,35 @@ const PublicProfile = () => {
             {lastName ? firstName + " " + lastName : firstName}
           </h1>
           <p className="text-gray-400">
-            {profileSummary.charAt(0).toUpperCase() +
-              profileSummary.slice(1) +
-              " ( " +
-              experienceLevel.charAt(0).toUpperCase() +
-              experienceLevel.slice(1) +
-              " )"}
+            {profileSummary &&
+              experienceLevel &&
+              profileSummary.charAt(0).toUpperCase() +
+                profileSummary.slice(1) +
+                " ( " +
+                experienceLevel.charAt(0).toUpperCase() +
+                experienceLevel.slice(1) +
+                " )"}
           </p>
         </div>
 
         {/* Basic Info */}
         <div className="mt-6">
-          <p>
-            <strong>Age:</strong> {age}
-          </p>
-          <p>
-            <strong>Location:</strong> {location}
-          </p>
-          <p>
-            <strong>Gender:</strong>{" "}
-            {gender.charAt(0).toUpperCase() + gender.slice(1)}
-          </p>
+          {age && (
+            <p>
+              <strong>Age:</strong> {age}
+            </p>
+          )}
+          {location && (
+            <p>
+              <strong>Location:</strong> {location}
+            </p>
+          )}
+          {gender && (
+            <p>
+              <strong>Gender:</strong>{" "}
+              {gender.charAt(0).toUpperCase() + gender.slice(1)}
+            </p>
+          )}
         </div>
 
         {/* Bio Section */}
