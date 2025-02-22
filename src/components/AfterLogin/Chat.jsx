@@ -52,6 +52,7 @@ const Chat = () => {
             : senderId.firstName,
           text,
           timestamp,
+          senderId: senderId._id, // Passing senderId here
         };
       });
 
@@ -97,13 +98,14 @@ const Chat = () => {
 
     socketRef.current.on(
       "receiveMessage",
-      ({ firstName, lastName, text, timestamp }) => {
+      ({ firstName, lastName, text, timestamp, senderId }) => {
         setMessages((prevMessages) => [
           ...prevMessages,
           {
             sender: lastName ? `${firstName} ${lastName}` : firstName,
             text,
             timestamp,
+            senderId, // Passing senderId here
           },
         ]);
       }
@@ -118,11 +120,10 @@ const Chat = () => {
   const handleSendMessage = () => {
     if (newMessage.trim() !== "" && socketRef.current) {
       const timestamp = new Date().toISOString();
-
       socketRef.current.emit("sendMessage", {
         firstName: user.firstName,
         lastName: user.lastName,
-        senderId: userId,
+        senderId: user._id,
         text: newMessage,
         targetUserId,
         timestamp,
@@ -136,13 +137,8 @@ const Chat = () => {
     const container = messagesContainerRef.current;
     if (!container) return;
 
-    const isAtBottom =
-      container.scrollHeight - container.scrollTop <=
-      container.clientHeight + 50;
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 
-    if (isAtBottom) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
   }, [messages]);
 
   return (
@@ -167,12 +163,7 @@ const Chat = () => {
           <div
             key={index}
             className={`chat flex flex-col ${
-              message.sender ===
-              (user?.lastName
-                ? `${user?.firstName} ${user?.lastName}`
-                : user?.firstName)
-                ? "chat-end"
-                : "chat-start"
+              message.senderId === userId ? "chat-end" : "chat-start"
             }`}
           >
             <div className="chat-header">{message.sender}</div>
