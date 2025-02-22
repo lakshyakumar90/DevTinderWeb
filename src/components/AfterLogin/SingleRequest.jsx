@@ -21,8 +21,6 @@ const SingleRequest = ({ request }) => {
     education,
   } = request.fromUserId;
 
-  console.log(request);
-
   const handleClick = async (status) => {
     try {
       await requestReview(request._id, status, setError);
