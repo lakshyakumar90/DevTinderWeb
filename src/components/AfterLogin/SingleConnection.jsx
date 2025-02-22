@@ -42,7 +42,7 @@ const SingleConnection = ({ user }) => {
             {lastName ? firstName + " " + lastName : firstName}
           </h3>
           <p className="text-gray-400 text-sm">
-            {profileSummary.length > 50
+            {profileSummary && profileSummary.length > 50
               ? profileSummary.slice(0, 50) + "..."
               : profileSummary.charAt(0).toUpperCase() +
                 profileSummary.slice(1)}
