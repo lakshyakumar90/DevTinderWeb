@@ -5,6 +5,7 @@ import useLogin from "../../utils/hooks/useLogin";
 import { Toaster } from "react-hot-toast";
 import { FaGoogle, FaGithub, FaFacebook } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { BASE_URL } from "../../utils/constants/constants";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -18,8 +19,8 @@ const Login = () => {
     login(email, password, setError);
   };
 
-  const handleGoogleSignIn = async() => {
-    window.location.href = "http://localhost:3000/googlelogin";
+  const handleGoogleSignIn = async () => {
+    window.location.href = BASE_URL + "/googlelogin";
   };
 
   return (
