@@ -46,10 +46,12 @@ const SingleConnection = ({ user }) => {
           <p className="text-gray-400 text-sm">
             {profileSummary && (
               <>
-                {profileSummary.length > 50
-                  ? profileSummary.slice(0, 50) + "..."
-                  : profileSummary.charAt(0).toUpperCase() +
-                    profileSummary.slice(1)}
+                {profileSummary?.length
+                  ? profileSummary.length > 50
+                    ? profileSummary.slice(0, 50) + "..."
+                    : profileSummary.charAt(0).toUpperCase() +
+                      profileSummary.slice(1)
+                  : ""}
                 <br />
               </>
             )}
