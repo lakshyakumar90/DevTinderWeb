@@ -44,15 +44,18 @@ const SingleConnection = ({ user }) => {
             {lastName ? firstName + " " + lastName : firstName}
           </h3>
           <p className="text-gray-400 text-sm">
-            {profileSummary && profileSummary.length > 50
-              ? profileSummary.slice(0, 50) + "..."
-              : profileSummary.charAt(0).toUpperCase() +
-                profileSummary.slice(1)}
-            <br />({" "}
+            {profileSummary && (
+              <>
+                {profileSummary.length > 50
+                  ? profileSummary.slice(0, 50) + "..."
+                  : profileSummary.charAt(0).toUpperCase() +
+                    profileSummary.slice(1)}
+                <br />
+              </>
+            )}
             {experienceLevel &&
               experienceLevel.charAt(0).toUpperCase() +
                 experienceLevel.slice(1)}{" "}
-            )
           </p>
         </div>
         <Link to={`/chat/${_id}?targetUserName=${firstName}`}>
