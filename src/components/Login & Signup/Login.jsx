@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import useLogin from "../../utils/hooks/useLogin";
 import { Toaster } from "react-hot-toast";
-import { FaGoogle, FaGithub, FaFacebook } from "react-icons/fa";
+import { FaGoogle, FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { BASE_URL } from "../../utils/constants/constants";
 
@@ -89,9 +89,8 @@ const Login = () => {
           </button>
           <button
             type="button"
-            disabled
             onClick={handleGoogleSignIn}
-            className="w-full bg-slate-200 text-gray-900 py-2 rounded-md transition duration-200 flex items-center justify-center border border-gray-300 opacity-50 cursor-not-allowed hover:bg-slate-200"
+            className="w-full bg-slate-200 text-gray-900 py-2 rounded-md cursor-pointer hover:bg-white transition duration-200 flex items-center justify-center border border-gray-300"
           >
             {FaGithub && <FaGithub className="h-5 w-5 mr-2" />}
           </button>
@@ -109,7 +108,7 @@ const Login = () => {
             onClick={handleGoogleSignIn}
             className="w-full bg-slate-200 text-gray-900 py-2 rounded-md transition duration-200 flex items-center justify-center border border-gray-300 opacity-50 cursor-not-allowed hover:bg-slate-200"
           >
-            {FaFacebook && <FaFacebook className="h-5 w-5 mr-2" />}
+            {FaLinkedin && <FaLinkedin className="h-5 w-5 mr-2" />}
           </button>
         </div>
         <p className="text-center text-sm text-gray-600 mt-4">

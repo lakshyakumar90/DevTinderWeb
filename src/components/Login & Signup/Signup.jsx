@@ -2,9 +2,9 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useSignup from "../../utils/hooks/useSignup";
-import { Toaster } from "react-hot-toast";
-import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaGoogle } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { BASE_URL } from "../../utils/constants/constants";
 
 const Signup = () => {
   const signup = useSignup();
@@ -17,14 +17,18 @@ const Signup = () => {
     location: "",
     gender: "",
     education: "",
-    profileSummary: ""
+    profileSummary: "",
   });
   const [lastName, setLastName] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleGoogleSignIn = async() => {
-    window.location.href = "http://localhost:3000/googlelogin";
+  const handleGoogleSignIn = async () => {
+    window.location.href = BASE_URL + "/googlelogin";
+  };
+
+  const handleGitHubSignIn = async () => {
+    window.location.href = BASE_URL + "/githublogin";
   };
 
   const handleSubmit = async (e) => {
@@ -32,7 +36,7 @@ const Signup = () => {
     e.preventDefault();
     const submitData = {
       ...formData,
-      ...(lastName && { lastName })
+      ...(lastName && { lastName }),
     };
     signup(submitData, setError);
   };
@@ -44,7 +48,7 @@ const Signup = () => {
     } else {
       setFormData({
         ...formData,
-        [name]: value
+        [name]: value,
       });
     }
   };
@@ -52,10 +56,10 @@ const Signup = () => {
   return (
     <div className="flex items-center justify-center min-h-screen text-gray-300">
       <div className="w-full max-w-2xl p-8 rounded-lg shadow-lg bg-base-200 my-24">
-        <h2 className="text-2xl font-bold text-center text-gray-200">Sign Up</h2>
-        <p className="text-sm text-center mb-4">
-          Join our developer community
-        </p>
+        <h2 className="text-2xl font-bold text-center text-gray-200">
+          Sign Up
+        </h2>
+        <p className="text-sm text-center mb-4">Join our developer community</p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex gap-4">
             <div className="flex-1">
@@ -112,7 +116,11 @@ const Signup = () => {
               className="absolute inset-y-0 top-7 right-3 flex items-center text-gray-500"
               onClick={() => setPasswordVisible(!passwordVisible)}
             >
-              {passwordVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              {passwordVisible ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
             </button>
           </div>
 
@@ -234,9 +242,8 @@ const Signup = () => {
           </button>
           <button
             type="button"
-            disabled
-            onClick={handleGoogleSignIn}
-            className="w-full bg-slate-200 text-gray-900 py-2 rounded-md transition duration-200 flex items-center justify-center border border-gray-300 opacity-50 cursor-not-allowed hover:bg-slate-200"
+            onClick={handleGitHubSignIn}
+            className="w-full bg-slate-200 text-gray-900 py-2 rounded-md cursor-pointer hover:bg-white transition duration-200 flex items-center justify-center border border-gray-300"
           >
             {FaGithub && <FaGithub className="h-5 w-5 mr-2" />}
           </button>
@@ -254,7 +261,7 @@ const Signup = () => {
             onClick={handleGoogleSignIn}
             className="w-full bg-slate-200 text-gray-900 py-2 rounded-md transition duration-200 flex items-center justify-center border border-gray-300 opacity-50 cursor-not-allowed hover:bg-slate-200"
           >
-            {FaFacebook && <FaFacebook className="h-5 w-5 mr-2" />}
+            {FaLinkedin && <FaLinkedin className="h-5 w-5 mr-2" />}
           </button>
         </div>
 
